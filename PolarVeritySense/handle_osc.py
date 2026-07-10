@@ -22,7 +22,7 @@ def send_osc(measurements):
             else:
                 val = global_vars.last_valid_measurements[idx]
         
-            osc_client.send_message(f"/armband/value{idx}", round(val, 2))
+            osc_client.send_message(f"/hrm/value{idx}", round(val, 2))
 
         if global_vars.DEBUG_MODE:
             debug_sensor_data(global_vars.last_valid_measurements)

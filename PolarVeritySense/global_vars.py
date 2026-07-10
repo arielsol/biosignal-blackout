@@ -10,7 +10,7 @@ PPG_CHANNEL_INDEX = 0
 
 # OSC settings
 OSC_IP_ADDRESS = "127.0.0.1"
-OSC_PORT = 3132
+OSC_PORT = 3133
 
 # Print sensor data in terminal
 DEBUG_MODE = True
