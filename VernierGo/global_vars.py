@@ -1,7 +1,7 @@
 # Name of device to connnect - available:
     #GDX-RB 0K7012M6
     #GDX-RB 0K701450
-DEVICE_TO_OPEN = 'GDX-RB 0K7012M6'
+DEVICE_TO_OPEN = 'GDX-RB 0K701450'
 
 # Collects data at this rate, milliseconds (500ms = 2 samples/sec)
 SAMPLE_PERIOD = 50 
