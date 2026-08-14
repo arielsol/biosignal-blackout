@@ -1,7 +1,7 @@
 # Name of device to connnect - available:
     #1ABC0538
     #1C916339
-DEVICE_TO_OPEN = '1C916339'
+DEVICE_TO_OPEN = '1ABC0538'
 
 # Optical sensor channels available:
     # 0: Primary signal channel
