@@ -1,11 +1,11 @@
 # Biosignal Blackout
 
-An immersive theatre/dance show in which the performers' bodies drive live visuals. Performers wear wireless biosensors: a **Polar Verity Sense** optical heart-rate monitor and a **Vernier Go Direct Respiration Belt**. Small Python bridge scripts read the sensors over Bluetooth LE and stream their values over OSC into a **TouchDesigner** show system. That show system renders and plays back the visuals for each act.
+An immersive theatre/dance show in which the performers' bodies drive live visuals. Performers wear wireless biosensors: a **Polar Verity Sense** optical heart-rate monitor and a **Vernier Go Direct Respiration Belt**. Small Python bridge scripts read the sensors over Bluetooth LE and stream their values over OSC into a **TouchDesigner** patch. The TD show system renders and plays back the visuals for each act.
 
 ```
- Polar Verity Sense ──BLE──▶ PolarVeritySense/hrm_connect.py ──OSC :3133──┐
-                                                                           ├──▶ TouchDesigner/Show System.toe ──▶ projection
- Vernier GDX-RB belt ─BLE──▶ VernierGo/belt_connect.py ───────OSC :3132──┘
+ Polar Verity Sense ──BLE──▶ PolarVeritySense/hrm_connect.py ──OSC──┐
+                                                                     ├──▶ TouchDesigner/Show System.toe ──▶ projection
+ Vernier GDX-RB belt ─BLE──▶ VernierGo/belt_connect.py ───────OSC──┘
 ```
 
 ## Requirements
@@ -31,7 +31,7 @@ Each bridge reads its settings from a `global_vars.py` file in its own folder. E
 
 | Setting | Default | Notes |
 | --- | --- | --- |
-| `DEVICE_TO_OPEN` | `'1ABC0538'` | Matched against the BLE device name. |
+| `DEVICE_TO_OPEN` | `'1ABC0538'` | Default will not work: match against the BLE device name. |
 | `PPG_CHANNEL_INDEX` | `0` | Optical channel used for the waveform (0–2; channel 3 is ambient light and is subtracted). |
 | `OSC_IP_ADDRESS` / `OSC_PORT` | `127.0.0.1` / `3133` | |
 | `DEBUG_MODE` | `True` | Prints live values in the terminal. |
@@ -40,7 +40,7 @@ Each bridge reads its settings from a `global_vars.py` file in its own folder. E
 
 | Setting | Default | Notes |
 | --- | --- | --- |
-| `DEVICE_TO_OPEN` | `'GDX-RB 0K7012M6'` | Matched against the device serial numer/ |
+| `DEVICE_TO_OPEN` | `'GDX-RB 0K7012M6'` | Default will not work: match against the device serial number. |
 | `SAMPLE_PERIOD` | `50` | Sampling period in milliseconds (50 ms = 20 samples/sec). |
 | `SELECTED_SENSORS` | `[1, 2, 4, 5]` | 1 = Force, 2 = Respiration Rate, 4 = Steps, 5 = Step Rate. |
 | `OSC_IP_ADDRESS` / `OSC_PORT` | `127.0.0.1` / `3132` | |
@@ -52,14 +52,14 @@ To run TouchDesigner on a different machine from the sensors, set `OSC_IP_ADDRES
 
 All values are rounded to 2 decimals. When a sensor returns NaN, the last valid value is sent again, so TouchDesigner never receives NaN.
 
-| Port | Address | Value |
-| --- | --- | --- |
-| 3133 | `/hrm/value0` | Heart rate (BPM) |
-| 3133 | `/hrm/value1` | PPG waveform (raw optical signal minus ambient light) |
-| 3132 | `/belt/sensor0` | Force (breathing pressure on the belt) |
-| 3132 | `/belt/sensor1` | Respiration rate |
-| 3132 | `/belt/sensor2` | Steps |
-| 3132 | `/belt/sensor3` | Step rate |
+| Address | Value |
+| --- | --- |
+| `/hrm/value0` | Heart rate (BPM) |
+| `/hrm/value1` | PPG waveform (raw optical signal minus ambient light) |
+| `/belt/sensor0` | Force (breathing pressure on the belt) |
+| `/belt/sensor1` | Respiration rate |
+| `/belt/sensor2` | Steps |
+| `/belt/sensor3` | Step rate |
 
 The belt addresses follow the order of `SELECTED_SENSORS`. If you change that list, the meaning of `/belt/sensorN` changes with it.
 
